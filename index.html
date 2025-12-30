@@ -3,374 +3,257 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Escala de Satisfação com a Vida (SWLS)</title>
-  <meta name="description" content="Teste on-line gratuito: Escala de Satisfação com a Vida (Diener et al., 1985). Some os pontos (1 a 7) e veja sua faixa de satisfação." />
+  <title>Escala de Satisfação com a Vida</title>
+  <meta name="description" content="Teste on-line gratuito baseado na Escala de Satisfação com a Vida (Diener et al., 1985)." />
+
   <style>
     :root{
-      --bg: #0b1220;
-      --panel: rgba(255,255,255,.06);
-      --panel-2: rgba(255,255,255,.09);
-      --text: rgba(255,255,255,.92);
-      --muted: rgba(255,255,255,.70);
-      --muted2: rgba(255,255,255,.55);
-      --stroke: rgba(255,255,255,.14);
-      --focus: rgba(120, 190, 255, .35);
-      --shadow: 0 18px 60px rgba(0,0,0,.45);
-      --radius: 18px;
-      --radius2: 14px;
+      /* Paleta terrosa minimalista */
+      --bg: #F6F1E8;
+      --paper: #EFE7D8;
+      --card: rgba(255,255,255,.78);
+      --ink: #1E1C18;
+      --muted: #6E665C;
+      --line: rgba(30,28,24,.12);
+      --accent: #B5654D;
+
+      --radius: 16px;
+      --radius-sm: 12px;
+      --shadow: 0 10px 30px rgba(0,0,0,.08);
       --maxw: 980px;
-      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+
+      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
     }
 
     *{ box-sizing: border-box; }
-    html, body{ height: 100%; }
     body{
       margin: 0;
       font-family: var(--font);
-      color: var(--text);
+      color: var(--ink);
       background:
-        radial-gradient(1200px 800px at 10% -10%, rgba(60,110,255,.35), transparent 55%),
-        radial-gradient(900px 700px at 110% 10%, rgba(120,190,255,.22), transparent 50%),
-        radial-gradient(900px 700px at 50% 110%, rgba(255,120,170,.12), transparent 55%),
-        linear-gradient(180deg, #070b14 0%, var(--bg) 60%, #070b14 100%);
+        radial-gradient(800px 600px at 10% 0%, rgba(181,101,77,.12), transparent 55%),
+        radial-gradient(800px 600px at 100% 10%, rgba(138,90,68,.10), transparent 50%),
+        linear-gradient(180deg, var(--paper), var(--bg));
     }
-
-    a{ color: inherit; }
 
     .wrap{
       max-width: var(--maxw);
       margin: 0 auto;
-      padding: 28px 18px 50px;
+      padding: 32px 18px 56px;
     }
 
-    header{
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin: 18px 0 22px;
-    }
-
-    .badge{
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      width: fit-content;
-      padding: 8px 12px;
-      border: 1px solid var(--stroke);
-      border-radius: 999px;
-      background: rgba(255,255,255,.04);
-      color: var(--muted);
-      font-size: 13px;
-      letter-spacing: .2px;
-    }
-    .dot{
-      width: 8px; height: 8px; border-radius: 99px;
-      background: rgba(120,190,255,.85);
-      box-shadow: 0 0 0 6px rgba(120,190,255,.12);
-    }
-
+    header{ margin-bottom: 22px; }
     h1{
-      margin: 0;
-      font-size: clamp(24px, 3vw, 34px);
-      letter-spacing: -0.3px;
-      line-height: 1.15;
+      margin: 0 0 10px;
+      font-size: clamp(26px, 3vw, 36px);
+      letter-spacing: -0.02em;
     }
-
     .sub{
       margin: 0;
+      max-width: 75ch;
       color: var(--muted);
       font-size: 15px;
-      line-height: 1.55;
-      max-width: 70ch;
+      line-height: 1.6;
     }
 
-    .grid{
+    main{
       display: grid;
-      grid-template-columns: 1.4fr .9fr;
-      gap: 16px;
+      grid-template-columns: 1.45fr .95fr;
+      gap: 20px;
       align-items: start;
     }
-    @media (max-width: 940px){
-      .grid{ grid-template-columns: 1fr; }
+    @media (max-width: 900px){
+      main{ grid-template-columns: 1fr; }
     }
 
     .card{
-      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.04));
-      border: 1px solid var(--stroke);
+      background: var(--card);
+      border: 1px solid var(--line);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
       overflow: hidden;
     }
-
-    .card .hd{
-      padding: 16px 16px 12px;
-      border-bottom: 1px solid var(--stroke);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .card .hd h2{
-      margin: 0;
-      font-size: 14px;
+    .card-h{
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--line);
+      font-size: 12.5px;
       text-transform: uppercase;
-      letter-spacing: .12em;
+      letter-spacing: .14em;
       color: var(--muted);
       font-weight: 700;
+      display:flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
     }
-
     .pill{
-      font-size: 13px;
-      padding: 7px 10px;
-      border-radius: 999px;
-      border: 1px solid var(--stroke);
-      background: rgba(255,255,255,.04);
+      font-size: 12px;
+      letter-spacing: .08em;
+      text-transform: none;
       color: var(--muted);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: rgba(255,255,255,.55);
       white-space: nowrap;
     }
+    .card-c{ padding: 18px 16px 20px; }
 
-    .content{ padding: 14px 16px 16px; }
-
-    .q{
-      padding: 14px 14px;
-      border: 1px solid var(--stroke);
-      border-radius: var(--radius2);
-      background: rgba(255,255,255,.035);
-      margin-bottom: 12px;
+    .helper{
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.55);
+      border-radius: var(--radius-sm);
+      padding: 12px 12px;
+      margin-bottom: 14px;
+      color: var(--muted);
+      font-size: 13.5px;
+      line-height: 1.55;
     }
 
-    .q legend{
+    .grid2{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    @media (max-width: 520px){
+      .grid2{ grid-template-columns: 1fr; }
+    }
+    .field{
+      display:flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .field label{
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: .04em;
+    }
+    .field input{
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 10px 12px;
+      background: rgba(255,255,255,.7);
+      font-size: 14px;
+      color: var(--ink);
+      outline: none;
+    }
+    .field input:focus{
+      border-color: rgba(181,101,77,.45);
+      box-shadow: 0 0 0 4px rgba(181,101,77,.12);
+    }
+
+    fieldset{
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      padding: 14px;
+      margin: 0 0 14px;
+      background: rgba(255,255,255,.55);
+    }
+    legend{
       padding: 0;
       margin-bottom: 10px;
       font-weight: 650;
-      color: rgba(255,255,255,.90);
-      line-height: 1.35;
       font-size: 15px;
     }
 
     .scale{
       display: grid;
-      grid-template-columns: repeat(7, minmax(0, 1fr));
+      grid-template-columns: repeat(7, 1fr);
       gap: 8px;
-      margin: 10px 0 6px;
+      margin: 8px 0;
     }
-
-    .opt{
-      position: relative;
-      border: 1px solid var(--stroke);
-      border-radius: 12px;
-      background: rgba(255,255,255,.03);
-      transition: transform .06s ease, background .2s ease, border-color .2s ease;
-      min-height: 42px;
-      display: grid;
-      place-items: center;
+    label.opt{
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 10px 0;
+      text-align: center;
       cursor: pointer;
+      font-weight: 650;
+      background: rgba(255,255,255,.62);
+      transition: background .2s ease, border-color .2s ease;
       user-select: none;
     }
-    .opt:hover{ background: rgba(255,255,255,.05); }
-    .opt:active{ transform: scale(.985); }
-
-    .opt input{
-      position: absolute;
-      inset: 0;
-      opacity: 0;
-      cursor: pointer;
-      margin: 0;
-    }
-
-    .opt span{
-      font-weight: 700;
-      color: rgba(255,255,255,.86);
-      font-size: 14px;
-    }
-
-    .opt:has(input:checked){
-      border-color: rgba(120,190,255,.70);
-      background: rgba(120,190,255,.10);
-      box-shadow: 0 0 0 4px rgba(120,190,255,.10);
+    label.opt:hover{ background: rgba(255,255,255,.90); }
+    label.opt input{ display: none; }
+    label.opt:has(input:checked){
+      border-color: var(--accent);
+      background: rgba(181,101,77,.16);
     }
 
     .hint{
       display: flex;
       justify-content: space-between;
-      gap: 10px;
-      color: var(--muted2);
-      font-size: 12.5px;
-      line-height: 1.35;
-      margin-top: 8px;
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 6px;
     }
 
     .actions{
       display: flex;
       gap: 10px;
       flex-wrap: wrap;
-      margin-top: 14px;
+      margin-top: 12px;
     }
-
-    .btn{
-      border: 1px solid var(--stroke);
-      background: rgba(255,255,255,.05);
-      color: var(--text);
-      padding: 10px 12px;
+    button{
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.72);
       border-radius: 12px;
-      font-weight: 700;
+      padding: 10px 14px;
       cursor: pointer;
-      transition: background .2s ease, border-color .2s ease, transform .06s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--ink);
     }
-    .btn:hover{ background: rgba(255,255,255,.08); }
-    .btn:active{ transform: scale(.99); }
-
-    .btn.primary{
-      border-color: rgba(120,190,255,.70);
-      background: rgba(120,190,255,.14);
+    button.primary{
+      border-color: var(--accent);
+      background: rgba(181,101,77,.18);
     }
-    .btn.primary:hover{ background: rgba(120,190,255,.18); }
-
-    .btn:focus-visible{
-      outline: none;
-      box-shadow: 0 0 0 5px var(--focus);
+    button:hover{ background: rgba(255,255,255,.96); }
+    button:disabled{
+      opacity: .55;
+      cursor: not-allowed;
     }
 
-    .small{
-      font-size: 12.5px;
-      color: var(--muted2);
-      margin: 10px 0 0;
-      line-height: 1.5;
+    .result-box{
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      padding: 16px;
+      background: rgba(255,255,255,.6);
     }
-
-    /* Side panel */
-    .scoreBox{
-      display: grid;
-      gap: 12px;
-    }
-
-    .result{
-      padding: 14px 14px;
-      border: 1px solid var(--stroke);
-      border-radius: var(--radius2);
-      background: rgba(255,255,255,.035);
-    }
-
-    .big{
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 10px;
-    }
-
-    .big .n{
-      font-size: 40px;
+    .score{
+      font-size: 44px;
       font-weight: 900;
-      letter-spacing: -0.05em;
+      letter-spacing: -0.04em;
       line-height: 1;
     }
-
-    .big .max{
-      color: var(--muted2);
-      font-size: 13px;
-      font-weight: 700;
-    }
-
-    .label{
-      font-size: 14px;
+    .range{
+      margin-top: 8px;
       font-weight: 800;
-      margin: 0 0 6px;
-      letter-spacing: .2px;
+      font-size: 15px;
     }
     .desc{
-      margin: 0;
+      margin-top: 8px;
+      font-size: 14px;
       color: var(--muted);
-      font-size: 13.5px;
       line-height: 1.55;
     }
 
-    .bar{
-      height: 10px;
-      border-radius: 99px;
-      border: 1px solid var(--stroke);
-      background: rgba(255,255,255,.03);
-      overflow: hidden;
-      margin: 12px 0 4px;
-    }
-    .bar > i{
-      display: block;
-      height: 100%;
-      width: 0%;
-      background: linear-gradient(90deg, rgba(120,190,255,.85), rgba(255,120,170,.55));
-      border-radius: 99px;
-      transition: width .35s ease;
-    }
-    .barMeta{
-      display: flex;
-      justify-content: space-between;
-      color: var(--muted2);
-      font-size: 12px;
-      margin-top: 8px;
-      gap: 10px;
-    }
-
-    .ranges{
-      border: 1px solid var(--stroke);
-      border-radius: var(--radius2);
-      background: rgba(255,255,255,.03);
-      padding: 12px 12px;
-    }
-    .ranges h3{
-      margin: 0 0 10px;
-      font-size: 13px;
-      text-transform: uppercase;
-      letter-spacing: .12em;
-      color: var(--muted);
-    }
-    .ranges ul{
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      display: grid;
-      gap: 8px;
-    }
-    .ranges li{
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      font-size: 13px;
-      color: rgba(255,255,255,.82);
-      padding: 8px 10px;
-      border-radius: 12px;
-      border: 1px solid transparent;
-      background: rgba(255,255,255,.02);
-    }
-    .ranges li.active{
-      border-color: rgba(120,190,255,.55);
-      background: rgba(120,190,255,.10);
-    }
-    .ranges .k{ color: var(--muted); font-weight: 800; }
-    .ranges .v{ color: rgba(255,255,255,.90); font-weight: 750; }
-
-    footer{
-      margin-top: 16px;
-      color: var(--muted2);
-      font-size: 12.5px;
-      line-height: 1.6;
-      text-align: left;
-      padding: 0 2px;
-    }
-    .footCard{
+    .mini{
       margin-top: 14px;
-      padding: 12px 14px;
-      border-radius: var(--radius2);
-      border: 1px solid var(--stroke);
-      background: rgba(255,255,255,.03);
-    }
-    .cite{
       font-size: 12.5px;
-      color: var(--muted2);
-      margin-top: 10px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .sign{
+      margin-top: 12px;
+      font-size: 12.5px;
+      color: rgba(30,28,24,.72);
+      letter-spacing: .02em;
+    }
+    .sign strong{
+      color: rgba(30,28,24,.85);
+      font-weight: 800;
     }
 
     .toast{
@@ -380,11 +263,11 @@
       transform: translateX(-50%);
       padding: 10px 12px;
       border-radius: 12px;
-      border: 1px solid var(--stroke);
-      background: rgba(10, 15, 28, .85);
-      box-shadow: 0 12px 40px rgba(0,0,0,.45);
-      color: rgba(255,255,255,.92);
-      font-weight: 700;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.88);
+      box-shadow: 0 10px 26px rgba(0,0,0,.10);
+      color: var(--ink);
+      font-weight: 800;
       font-size: 13px;
       opacity: 0;
       pointer-events: none;
@@ -395,185 +278,157 @@
       transform: translateX(-50%) translateY(-4px);
     }
   </style>
+
+  <!-- jsPDF via CDN (necessário para baixar o PDF) -->
+  <script defer src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
 </head>
+
 <body>
   <div class="wrap">
     <header>
-      <div class="badge"><span class="dot"></span>Teste rápido, gratuito e anônimo</div>
       <h1>Escala de Satisfação com a Vida</h1>
       <p class="sub">
-        Responda às 5 afirmações abaixo usando a escala de 1 a 7. Ao final, você verá sua pontuação total (5 a 35) e a faixa correspondente.
+        Responda às 5 afirmações abaixo considerando sua vida como um todo.
+        Utilize a escala de 1 (discordo totalmente) a 7 (concordo totalmente). Ao final, você pode baixar um PDF com o resultado.
       </p>
     </header>
 
-    <main class="grid">
-      <!-- Form -->
-      <section class="card" aria-label="Questionário">
-        <div class="hd">
-          <h2>Questionário</h2>
-          <div class="pill" id="progressPill">0 de 5 respondidas</div>
+    <main>
+      <section class="card">
+        <div class="card-h">
+          <span>Questionário</span>
+          <span class="pill" id="progress">0 de 5 respondidas</span>
         </div>
 
-        <div class="content">
-          <form id="swlsForm" novalidate>
-            <!-- Q1 -->
-            <fieldset class="q" data-q="1">
+        <div class="card-c">
+          <div class="helper">
+            <strong>Modo palestra (opcional):</strong> se você estiver fazendo este teste durante um evento, insira o <strong>Código do Evento</strong>.
+            Você também pode preencher nome e e-mail para constar no PDF (não coletamos nem enviamos dados: tudo fica no seu navegador).
+            <div class="grid2">
+              <div class="field">
+                <label for="nome">Nome (opcional)</label>
+                <input id="nome" type="text" placeholder="Seu nome" autocomplete="name" />
+              </div>
+              <div class="field">
+                <label for="email">E-mail (opcional)</label>
+                <input id="email" type="email" placeholder="seuemail@exemplo.com" autocomplete="email" />
+              </div>
+              <div class="field" style="grid-column: 1 / -1;">
+                <label for="evento">Código do Evento (opcional)</label>
+                <input id="evento" type="text" placeholder="Ex.: BPD-VA-2026" />
+              </div>
+            </div>
+          </div>
+
+          <form id="form">
+            <fieldset>
               <legend>1. Na maioria dos aspectos, minha vida está próxima do meu ideal</legend>
-              <div class="scale" role="radiogroup" aria-label="Pergunta 1">
-                <label class="opt"><input type="radio" name="q1" value="1"><span>1</span></label>
-                <label class="opt"><input type="radio" name="q1" value="2"><span>2</span></label>
-                <label class="opt"><input type="radio" name="q1" value="3"><span>3</span></label>
-                <label class="opt"><input type="radio" name="q1" value="4"><span>4</span></label>
-                <label class="opt"><input type="radio" name="q1" value="5"><span>5</span></label>
-                <label class="opt"><input type="radio" name="q1" value="6"><span>6</span></label>
-                <label class="opt"><input type="radio" name="q1" value="7"><span>7</span></label>
+              <div class="scale">
+                <label class="opt"><input type="radio" name="q1" value="1">1</label>
+                <label class="opt"><input type="radio" name="q1" value="2">2</label>
+                <label class="opt"><input type="radio" name="q1" value="3">3</label>
+                <label class="opt"><input type="radio" name="q1" value="4">4</label>
+                <label class="opt"><input type="radio" name="q1" value="5">5</label>
+                <label class="opt"><input type="radio" name="q1" value="6">6</label>
+                <label class="opt"><input type="radio" name="q1" value="7">7</label>
               </div>
-              <div class="hint">
-                <span>1 = Discordo totalmente</span>
-                <span>7 = Concordo totalmente</span>
-              </div>
+              <div class="hint"><span>Discordo totalmente</span><span>Concordo totalmente</span></div>
             </fieldset>
 
-            <!-- Q2 -->
-            <fieldset class="q" data-q="2">
+            <fieldset>
               <legend>2. Minhas condições de vida são excelentes</legend>
-              <div class="scale" role="radiogroup" aria-label="Pergunta 2">
-                <label class="opt"><input type="radio" name="q2" value="1"><span>1</span></label>
-                <label class="opt"><input type="radio" name="q2" value="2"><span>2</span></label>
-                <label class="opt"><input type="radio" name="q2" value="3"><span>3</span></label>
-                <label class="opt"><input type="radio" name="q2" value="4"><span>4</span></label>
-                <label class="opt"><input type="radio" name="q2" value="5"><span>5</span></label>
-                <label class="opt"><input type="radio" name="q2" value="6"><span>6</span></label>
-                <label class="opt"><input type="radio" name="q2" value="7"><span>7</span></label>
+              <div class="scale">
+                <label class="opt"><input type="radio" name="q2" value="1">1</label>
+                <label class="opt"><input type="radio" name="q2" value="2">2</label>
+                <label class="opt"><input type="radio" name="q2" value="3">3</label>
+                <label class="opt"><input type="radio" name="q2" value="4">4</label>
+                <label class="opt"><input type="radio" name="q2" value="5">5</label>
+                <label class="opt"><input type="radio" name="q2" value="6">6</label>
+                <label class="opt"><input type="radio" name="q2" value="7">7</label>
               </div>
-              <div class="hint">
-                <span>1 = Discordo totalmente</span>
-                <span>7 = Concordo totalmente</span>
-              </div>
+              <div class="hint"><span>Discordo totalmente</span><span>Concordo totalmente</span></div>
             </fieldset>
 
-            <!-- Q3 -->
-            <fieldset class="q" data-q="3">
+            <fieldset>
               <legend>3. Eu sou satisfeito com a minha vida</legend>
-              <div class="scale" role="radiogroup" aria-label="Pergunta 3">
-                <label class="opt"><input type="radio" name="q3" value="1"><span>1</span></label>
-                <label class="opt"><input type="radio" name="q3" value="2"><span>2</span></label>
-                <label class="opt"><input type="radio" name="q3" value="3"><span>3</span></label>
-                <label class="opt"><input type="radio" name="q3" value="4"><span>4</span></label>
-                <label class="opt"><input type="radio" name="q3" value="5"><span>5</span></label>
-                <label class="opt"><input type="radio" name="q3" value="6"><span>6</span></label>
-                <label class="opt"><input type="radio" name="q3" value="7"><span>7</span></label>
+              <div class="scale">
+                <label class="opt"><input type="radio" name="q3" value="1">1</label>
+                <label class="opt"><input type="radio" name="q3" value="2">2</label>
+                <label class="opt"><input type="radio" name="q3" value="3">3</label>
+                <label class="opt"><input type="radio" name="q3" value="4">4</label>
+                <label class="opt"><input type="radio" name="q3" value="5">5</label>
+                <label class="opt"><input type="radio" name="q3" value="6">6</label>
+                <label class="opt"><input type="radio" name="q3" value="7">7</label>
               </div>
-              <div class="hint">
-                <span>1 = Discordo totalmente</span>
-                <span>7 = Concordo totalmente</span>
-              </div>
+              <div class="hint"><span>Discordo totalmente</span><span>Concordo totalmente</span></div>
             </fieldset>
 
-            <!-- Q4 -->
-            <fieldset class="q" data-q="4">
+            <fieldset>
               <legend>4. Tenho alcançado coisas importantes que desejo em minha vida</legend>
-              <div class="scale" role="radiogroup" aria-label="Pergunta 4">
-                <label class="opt"><input type="radio" name="q4" value="1"><span>1</span></label>
-                <label class="opt"><input type="radio" name="q4" value="2"><span>2</span></label>
-                <label class="opt"><input type="radio" name="q4" value="3"><span>3</span></label>
-                <label class="opt"><input type="radio" name="q4" value="4"><span>4</span></label>
-                <label class="opt"><input type="radio" name="q4" value="5"><span>5</span></label>
-                <label class="opt"><input type="radio" name="q4" value="6"><span>6</span></label>
-                <label class="opt"><input type="radio" name="q4" value="7"><span>7</span></label>
+              <div class="scale">
+                <label class="opt"><input type="radio" name="q4" value="1">1</label>
+                <label class="opt"><input type="radio" name="q4" value="2">2</label>
+                <label class="opt"><input type="radio" name="q4" value="3">3</label>
+                <label class="opt"><input type="radio" name="q4" value="4">4</label>
+                <label class="opt"><input type="radio" name="q4" value="5">5</label>
+                <label class="opt"><input type="radio" name="q4" value="6">6</label>
+                <label class="opt"><input type="radio" name="q4" value="7">7</label>
               </div>
-              <div class="hint">
-                <span>1 = Discordo totalmente</span>
-                <span>7 = Concordo totalmente</span>
-              </div>
+              <div class="hint"><span>Discordo totalmente</span><span>Concordo totalmente</span></div>
             </fieldset>
 
-            <!-- Q5 -->
-            <fieldset class="q" data-q="5">
-              <legend>5. Se eu pudesse viver novamente, eu não mudaria praticamente nada</legend>
-              <div class="scale" role="radiogroup" aria-label="Pergunta 5">
-                <label class="opt"><input type="radio" name="q5" value="1"><span>1</span></label>
-                <label class="opt"><input type="radio" name="q5" value="2"><span>2</span></label>
-                <label class="opt"><input type="radio" name="q5" value="3"><span>3</span></label>
-                <label class="opt"><input type="radio" name="q5" value="4"><span>4</span></label>
-                <label class="opt"><input type="radio" name="q5" value="5"><span>5</span></label>
-                <label class="opt"><input type="radio" name="q5" value="6"><span>6</span></label>
-                <label class="opt"><input type="radio" name="q5" value="7"><span>7</span></label>
+            <fieldset>
+              <legend>5. Se eu pudesse viver novamente, não mudaria praticamente nada</legend>
+              <div class="scale">
+                <label class="opt"><input type="radio" name="q5" value="1">1</label>
+                <label class="opt"><input type="radio" name="q5" value="2">2</label>
+                <label class="opt"><input type="radio" name="q5" value="3">3</label>
+                <label class="opt"><input type="radio" name="q5" value="4">4</label>
+                <label class="opt"><input type="radio" name="q5" value="5">5</label>
+                <label class="opt"><input type="radio" name="q5" value="6">6</label>
+                <label class="opt"><input type="radio" name="q5" value="7">7</label>
               </div>
-              <div class="hint">
-                <span>1 = Discordo totalmente</span>
-                <span>7 = Concordo totalmente</span>
-              </div>
+              <div class="hint"><span>Discordo totalmente</span><span>Concordo totalmente</span></div>
             </fieldset>
 
             <div class="actions">
-              <button class="btn primary" type="button" id="btnCalcular">Calcular resultado</button>
-              <button class="btn" type="button" id="btnLimpar">Limpar respostas</button>
-              <button class="btn" type="button" id="btnCopiarLink">Copiar link do teste</button>
+              <button type="button" class="primary" id="btnCalcular">Calcular resultado</button>
+              <button type="button" id="btnPdf" disabled>Baixar PDF</button>
+              <button type="button" id="btnLimpar">Limpar</button>
             </div>
 
-            <p class="small">
+            <div class="mini">
               Dica: responda de forma intuitiva. Não existe certo ou errado. O objetivo é obter um retrato geral da sua satisfação com a vida neste momento.
-            </p>
+            </div>
           </form>
         </div>
       </section>
 
-      <!-- Results -->
-      <aside class="card" aria-label="Resultado e interpretação">
-        <div class="hd">
-          <h2>Resultado</h2>
-          <div class="pill" id="statusPill">Aguardando respostas</div>
+      <aside class="card">
+        <div class="card-h">
+          <span>Resultado</span>
+          <span class="pill" id="status">Aguardando</span>
         </div>
-
-        <div class="content scoreBox">
-          <div class="result" id="resultBox" aria-live="polite">
-            <div class="big">
-              <div class="n" id="score">0</div>
-              <div class="max">de 35</div>
-            </div>
-
-            <div class="bar" aria-hidden="true"><i id="barFill"></i></div>
-            <div class="barMeta">
-              <span id="answeredMeta">0 de 5 itens respondidos</span>
-              <span id="rangeMeta">Preencha tudo para interpretar</span>
-            </div>
-
-            <p class="label" id="rangeLabel">Ainda não calculado</p>
-            <p class="desc" id="rangeDesc">
-              Responda às 5 afirmações e clique em “Calcular resultado” para ver sua pontuação e a faixa correspondente.
-            </p>
+        <div class="card-c">
+          <div class="result-box" id="resultBox">
+            <div class="score" id="score">0</div>
+            <div class="range" id="range">Preencha todas as questões</div>
+            <p class="desc" id="desc"></p>
           </div>
 
-          <div class="ranges" aria-label="Faixas de interpretação">
-            <h3>Faixas</h3>
-            <ul id="rangeList">
-              <li data-min="31" data-max="35"><span class="k">31–35</span><span class="v">Extremamente satisfeito</span></li>
-              <li data-min="26" data-max="30"><span class="k">26–30</span><span class="v">Satisfeito</span></li>
-              <li data-min="21" data-max="25"><span class="k">21–25</span><span class="v">Um pouco satisfeito</span></li>
-              <li data-min="20" data-max="20"><span class="k">20</span><span class="v">Neutro</span></li>
-              <li data-min="15" data-max="19"><span class="k">15–19</span><span class="v">Um pouco insatisfeito</span></li>
-              <li data-min="10" data-max="14"><span class="k">10–14</span><span class="v">Insatisfeito</span></li>
-              <li data-min="5" data-max="9"><span class="k">5–9</span><span class="v">Extremamente insatisfeito</span></li>
-            </ul>
+          <div class="mini" style="margin-top: 14px;">
+            <strong>Observação importante:</strong> este instrumento é uma escala de autorrelato baseada em Diener et al. (1985) e
+            não substitui avaliação clínica ou psicológica. O PDF gerado pode ser usado como apoio em conversa com um profissional.
           </div>
 
-          <div class="footCard">
-            <strong style="display:block; margin-bottom:6px;">Observação importante</strong>
-            <div style="color: var(--muted); font-size: 13px; line-height: 1.55;">
-              Este instrumento é uma escala de autorrelato e não substitui avaliação clínica ou psicológica.
-              Se você estiver passando por sofrimento emocional significativo, considere buscar apoio profissional.
-            </div>
-            <div class="cite">
-              Referência: Diener, E., Emmons, R. A., Larsen, R. J., &amp; Griffin, S. (1985). The Satisfaction with Life Scale.
-              <em>Journal of Personality Assessment</em>, 49, 71–75.
-            </div>
+          <div class="sign">
+            <strong>@eufilipeteixeira</strong>
           </div>
 
-          <footer>
-            Você pode hospedar este arquivo como uma página estática no GitHub Pages ou Vercel.
-            Nenhum dado é enviado para servidor, o cálculo acontece apenas no seu navegador.
-          </footer>
+          <div class="mini" style="margin-top: 10px;">
+            Referência: Diener, E., Emmons, R. A., Larsen, R. J., &amp; Griffin, S. (1985). The Satisfaction with Life Scale.
+            <em>Journal of Personality Assessment</em>, 49, 71–75.
+          </div>
         </div>
       </aside>
     </main>
@@ -582,173 +437,238 @@
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
   <script>
-    (function(){
-      const form = document.getElementById('swlsForm');
-      const btnCalcular = document.getElementById('btnCalcular');
-      const btnLimpar = document.getElementById('btnLimpar');
-      const btnCopiarLink = document.getElementById('btnCopiarLink');
+    const form = document.getElementById('form');
+    const btnCalcular = document.getElementById('btnCalcular');
+    const btnPdf = document.getElementById('btnPdf');
+    const btnLimpar = document.getElementById('btnLimpar');
 
-      const scoreEl = document.getElementById('score');
-      const barFill = document.getElementById('barFill');
-      const rangeLabel = document.getElementById('rangeLabel');
-      const rangeDesc = document.getElementById('rangeDesc');
-      const rangeMeta = document.getElementById('rangeMeta');
-      const answeredMeta = document.getElementById('answeredMeta');
-      const progressPill = document.getElementById('progressPill');
-      const statusPill = document.getElementById('statusPill');
-      const rangeList = document.getElementById('rangeList');
+    const scoreEl = document.getElementById('score');
+    const rangeEl = document.getElementById('range');
+    const descEl = document.getElementById('desc');
 
-      const toast = document.getElementById('toast');
+    const progressEl = document.getElementById('progress');
+    const statusEl = document.getElementById('status');
 
-      const ranges = [
-        { min: 31, max: 35, label: 'Extremamente satisfeito', desc: 'Você relata um nível muito alto de satisfação com a vida no momento. Vale observar o que está funcionando e manter os hábitos que sustentam esse bem-estar.' },
-        { min: 26, max: 30, label: 'Satisfeito', desc: 'Você relata um bom nível de satisfação com a vida. Uma boa estratégia é identificar os pontos fortes da rotina e ajustar pequenos aspectos que ainda geram desgaste.' },
-        { min: 21, max: 25, label: 'Um pouco satisfeito', desc: 'Você relata satisfação moderada. Talvez existam áreas específicas que pedem atenção. Pequenas mudanças consistentes costumam gerar grande impacto ao longo do tempo.' },
-        { min: 20, max: 20, label: 'Neutro', desc: 'Você relata uma avaliação neutra. Pode ser um sinal de estabilidade, ou de falta de clareza sobre o que precisa mudar. Reflita sobre quais áreas estão mais drenando energia.' },
-        { min: 15, max: 19, label: 'Um pouco insatisfeito', desc: 'Você relata insatisfação moderada. Vale mapear quais áreas da vida mais pesam hoje e buscar apoio para construir ajustes práticos, com metas pequenas e realistas.' },
-        { min: 10, max: 14, label: 'Insatisfeito', desc: 'Você relata insatisfação significativa. Se isso estiver afetando seu bem-estar, pode ser importante conversar com alguém de confiança e, se possível, buscar suporte profissional.' },
-        { min: 5, max: 9, label: 'Extremamente insatisfeito', desc: 'Você relata um nível muito baixo de satisfação com a vida no momento. Se você estiver sofrendo, não carregue isso sozinho. Buscar apoio profissional pode fazer diferença.' }
-      ];
+    const nomeEl = document.getElementById('nome');
+    const emailEl = document.getElementById('email');
+    const eventoEl = document.getElementById('evento');
 
-      function showToast(msg){
-        toast.textContent = msg;
-        toast.classList.add('show');
-        window.clearTimeout(showToast._t);
-        showToast._t = window.setTimeout(() => toast.classList.remove('show'), 2200);
+    const toast = document.getElementById('toast');
+
+    const statements = [
+      "Na maioria dos aspectos, minha vida está próxima do meu ideal",
+      "Minhas condições de vida são excelentes",
+      "Eu sou satisfeito com a minha vida",
+      "Tenho alcançado coisas importantes que desejo em minha vida",
+      "Se eu pudesse viver novamente, não mudaria praticamente nada"
+    ];
+
+    const ranges = [
+      { min: 31, max: 35, label: "Extremamente satisfeito", desc: "Alto nível de satisfação com a vida no momento." },
+      { min: 26, max: 30, label: "Satisfeito", desc: "Bom nível de satisfação com a vida." },
+      { min: 21, max: 25, label: "Um pouco satisfeito", desc: "Satisfação moderada com a vida." },
+      { min: 20, max: 20, label: "Neutro", desc: "Avaliação neutra da vida neste momento." },
+      { min: 15, max: 19, label: "Um pouco insatisfeito", desc: "Alguns aspectos da vida podem precisar de atenção." },
+      { min: 10, max: 14, label: "Insatisfeito", desc: "Nível significativo de insatisfação." },
+      { min: 5,  max: 9,  label: "Extremamente insatisfeito", desc: "Baixo nível de satisfação com a vida no momento." }
+    ];
+
+    let lastResult = null;
+
+    function showToast(msg){
+      toast.textContent = msg;
+      toast.classList.add('show');
+      clearTimeout(showToast._t);
+      showToast._t = setTimeout(()=>toast.classList.remove('show'), 2200);
+    }
+
+    function answeredCount(){
+      let c = 0;
+      for(let i=1;i<=5;i++){
+        if(document.querySelector('input[name=q'+i+']:checked')) c++;
+      }
+      return c;
+    }
+
+    function updateProgress(){
+      const a = answeredCount();
+      progressEl.textContent = a + " de 5 respondidas";
+      statusEl.textContent = (a === 5) ? "Pronto" : "Aguardando";
+    }
+
+    form.addEventListener('change', updateProgress);
+    updateProgress();
+
+    function compute(){
+      let total = 0;
+      const answers = [];
+      for(let i=1;i<=5;i++){
+        const picked = document.querySelector('input[name=q'+i+']:checked');
+        if(!picked) return null;
+        const v = parseInt(picked.value, 10);
+        total += v;
+        answers.push(v);
+      }
+      const r = ranges.find(x => total >= x.min && total <= x.max);
+      return { total, answers, range: r ? r.label : "Indisponível", desc: r ? r.desc : "" };
+    }
+
+    btnCalcular.addEventListener('click', () => {
+      const res = compute();
+      if(!res){
+        showToast("Responda todas as questões.");
+        return;
       }
 
-      function getAnsweredCount(){
-        let answered = 0;
-        for(let i=1; i<=5; i++){
-          const v = form.querySelector(`input[name="q${i}"]:checked`);
-          if(v) answered++;
+      lastResult = res;
+      scoreEl.textContent = res.total;
+      rangeEl.textContent = res.range;
+      descEl.textContent = res.desc;
+
+      statusEl.textContent = "Calculado";
+      btnPdf.disabled = false;
+      showToast("Resultado calculado.");
+      document.getElementById('resultBox').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    btnLimpar.addEventListener('click', () => {
+      form.reset();
+      lastResult = null;
+      scoreEl.textContent = "0";
+      rangeEl.textContent = "Preencha todas as questões";
+      descEl.textContent = "";
+      btnPdf.disabled = true;
+      updateProgress();
+      showToast("Respostas limpas.");
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    btnPdf.addEventListener('click', () => {
+      if(!lastResult){
+        showToast("Calcule o resultado antes.");
+        return;
+      }
+
+      // jsPDF carregado via CDN
+      const jspdf = window.jspdf;
+      if(!jspdf || !jspdf.jsPDF){
+        showToast("Não foi possível carregar o gerador de PDF. Verifique sua conexão.");
+        return;
+      }
+
+      const { jsPDF } = jspdf;
+      const doc = new jsPDF({ unit: "mm", format: "a4" });
+
+      const now = new Date();
+      const dateStr = now.toLocaleString("pt-BR");
+
+      const nome = (nomeEl.value || "").trim();
+      const email = (emailEl.value || "").trim();
+      const evento = (eventoEl.value || "").trim();
+
+      const marginX = 16;
+      let y = 18;
+
+      // Título
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(16);
+      doc.text("Escala de Satisfação com a Vida (SWLS)", marginX, y);
+      y += 8;
+
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(11);
+      doc.text(`Data e hora: ${dateStr}`, marginX, y);
+      y += 7;
+
+      if(nome){
+        doc.text(`Nome: ${nome}`, marginX, y);
+        y += 6;
+      }
+      if(email){
+        doc.text(`E-mail: ${email}`, marginX, y);
+        y += 6;
+      }
+      if(evento){
+        doc.text(`Código do Evento: ${evento}`, marginX, y);
+        y += 6;
+      }
+
+      y += 4;
+
+      // Resultado
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(13);
+      doc.text("Resultado", marginX, y);
+      y += 7;
+
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(11);
+      doc.text(`Pontuação total: ${lastResult.total} (mín. 5 / máx. 35)`, marginX, y);
+      y += 6;
+
+      doc.setFont("helvetica", "bold");
+      doc.text(`Faixa: ${lastResult.range}`, marginX, y);
+      y += 6;
+
+      doc.setFont("helvetica", "normal");
+      const descLines = doc.splitTextToSize(`Interpretação: ${lastResult.desc}`, 180);
+      doc.text(descLines, marginX, y);
+      y += (descLines.length * 5.2) + 4;
+
+      // Respostas
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(13);
+      doc.text("Respostas", marginX, y);
+      y += 7;
+
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(11);
+
+      for(let i=0;i<5;i++){
+        const line = `${i+1}. ${statements[i]}  |  Resposta: ${lastResult.answers[i]} (1–7)`;
+        const wrapped = doc.splitTextToSize(line, 180);
+        doc.text(wrapped, marginX, y);
+        y += (wrapped.length * 5.2) + 2;
+
+        // Quebra de página automática
+        if(y > 270){
+          doc.addPage();
+          y = 18;
         }
-        return answered;
       }
 
-      function computeScore(){
-        let total = 0;
-        for(let i=1; i<=5; i++){
-          const picked = form.querySelector(`input[name="q${i}"]:checked`);
-          if(!picked) return null; // incomplete
-          total += Number(picked.value);
-        }
-        return total;
-      }
+      y += 3;
 
-      function setProgressUI(){
-        const answered = getAnsweredCount();
-        progressPill.textContent = `${answered} de 5 respondidas`;
-        answeredMeta.textContent = `${answered} de 5 itens respondidos`;
+      // Observação e referência
+      const note =
+        "Observação: este instrumento é uma escala de autorrelato e não substitui avaliação clínica ou psicológica. " +
+        "O resultado pode ser levado a um profissional como apoio em uma conversa sobre bem-estar.";
+      const noteLines = doc.splitTextToSize(note, 180);
 
-        const pct = Math.round((answered / 5) * 100);
-        statusPill.textContent = answered === 5 ? 'Pronto para calcular' : `Progresso: ${pct}%`;
-      }
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(10);
+      doc.text(noteLines, marginX, y);
+      y += (noteLines.length * 4.8) + 4;
 
-      function clearActiveRanges(){
-        Array.from(rangeList.querySelectorAll('li')).forEach(li => li.classList.remove('active'));
-      }
+      const ref =
+        "Referência: Diener, E., Emmons, R. A., Larsen, R. J., & Griffin, S. (1985). The Satisfaction with Life Scale. " +
+        "Journal of Personality Assessment, 49, 71–75.";
+      const refLines = doc.splitTextToSize(ref, 180);
+      doc.text(refLines, marginX, y);
+      y += (refLines.length * 4.8) + 6;
 
-      function highlightRange(score){
-        clearActiveRanges();
-        const items = Array.from(rangeList.querySelectorAll('li'));
-        const active = items.find(li => {
-          const min = Number(li.getAttribute('data-min'));
-          const max = Number(li.getAttribute('data-max'));
-          return score >= min && score <= max;
-        });
-        if(active) active.classList.add('active');
-      }
+      // Assinatura
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(11);
+      doc.text("@eufilipeteixeira", marginX, y);
 
-      function renderScore(score){
-        scoreEl.textContent = String(score);
-        const pct = Math.max(0, Math.min(100, Math.round((score / 35) * 100)));
-        barFill.style.width = pct + '%';
+      // Nome do arquivo
+      const safeName = (nome ? nome.replace(/[^\w\s-]/g, "").trim().replace(/\s+/g, "_") : "anonimo");
+      const fileName = `SWLS_resultado_${safeName}_${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,"0")}-${String(now.getDate()).padStart(2,"0")}.pdf`;
 
-        const r = ranges.find(x => score >= x.min && score <= x.max) || null;
-
-        if(!r){
-          rangeMeta.textContent = 'Pontuação fora do intervalo';
-          rangeLabel.textContent = 'Indisponível';
-          rangeDesc.textContent = 'Não foi possível interpretar essa pontuação.';
-          return;
-        }
-
-        rangeMeta.textContent = `Faixa: ${r.min}${r.max === r.min ? '' : '–' + r.max}`;
-        rangeLabel.textContent = r.label;
-        rangeDesc.textContent = r.desc;
-        highlightRange(score);
-      }
-
-      // Live update progress as user answers
-      form.addEventListener('change', () => {
-        setProgressUI();
-      });
-
-      btnCalcular.addEventListener('click', () => {
-        const answered = getAnsweredCount();
-        if(answered < 5){
-          showToast('Responda às 5 afirmações para calcular.');
-          const firstMissing = Array.from({length:5}, (_,i)=>i+1).find(i => !form.querySelector(`input[name="q${i}"]:checked`));
-          const fieldset = form.querySelector(`fieldset[data-q="${firstMissing}"]`);
-          if(fieldset) fieldset.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          return;
-        }
-
-        const total = computeScore();
-        if(total === null){
-          showToast('Preencha tudo para calcular.');
-          return;
-        }
-
-        renderScore(total);
-        statusPill.textContent = 'Resultado calculado';
-        showToast('Resultado calculado.');
-        // Scroll to result on mobile
-        document.getElementById('resultBox').scrollIntoView({ behavior: 'smooth', block: 'start' });
-      });
-
-      btnLimpar.addEventListener('click', () => {
-        form.reset();
-        clearActiveRanges();
-        scoreEl.textContent = '0';
-        barFill.style.width = '0%';
-        rangeLabel.textContent = 'Ainda não calculado';
-        rangeDesc.textContent = 'Responda às 5 afirmações e clique em “Calcular resultado” para ver sua pontuação e a faixa correspondente.';
-        rangeMeta.textContent = 'Preencha tudo para interpretar';
-        statusPill.textContent = 'Aguardando respostas';
-        setProgressUI();
-        showToast('Respostas limpas.');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      });
-
-      btnCopiarLink.addEventListener('click', async () => {
-        const url = window.location.href.split('#')[0];
-        try{
-          await navigator.clipboard.writeText(url);
-          showToast('Link copiado.');
-        }catch(e){
-          // Fallback
-          const tmp = document.createElement('textarea');
-          tmp.value = url;
-          document.body.appendChild(tmp);
-          tmp.select();
-          document.execCommand('copy');
-          document.body.removeChild(tmp);
-          showToast('Link copiado.');
-        }
-      });
-
-      // Init
-      setProgressUI();
-
-      // Optional: allow URL param "auto=1" to auto-calc if already answered (useful for embeds)
-      const params = new URLSearchParams(window.location.search);
-      if(params.get('auto') === '1'){
-        const total = computeScore();
-        if(total !== null) renderScore(total);
-      }
-    })();
+      doc.save(fileName);
+      showToast("PDF baixado.");
+    });
   </script>
 </body>
 </html>
