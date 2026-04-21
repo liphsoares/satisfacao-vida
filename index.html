@@ -93,7 +93,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: 50% 12%;
+      object-position: 50% 22%;
       display: block;
     }
 
@@ -267,6 +267,20 @@
       flex-shrink: 0;
       transition: color .18s, transform .18s;
     }
+    a.link-card.link-card-featured {
+      border-color: rgba(212,98,42,.35);
+      background: rgba(212,98,42,.08);
+    }
+    a.link-card.link-card-featured:hover {
+      background: rgba(212,98,42,.14);
+      border-color: rgba(212,98,42,.55);
+    }
+    a.link-card.link-card-featured .link-card-icon {
+      font-size: 22px;
+      background: rgba(212,98,42,.18);
+      border-color: rgba(212,98,42,.35);
+    }
+
     a.link-card:hover .link-card-arrow {
       color: var(--accent2);
       transform: translateX(3px);
@@ -332,6 +346,19 @@
         </a>
       </div>
     </div>
+
+    <!-- Divisor -->
+    <div class="section-label">Ebook</div>
+
+    <!-- Ebook Detox Digital -->
+    <a href="https://filipecarlos-ts.hotmart.host/pagina-de-vendas-16e5d04c-f444-49a6-b64a-fdb99c011d30?utm_source=ig&utm_medium=social&utm_content=link_in_bio" class="link-card link-card-featured" target="_blank" rel="noopener">
+      <div class="link-card-icon">📖</div>
+      <div class="link-card-body">
+        <div class="link-card-title">Detox Digital</div>
+        <div class="link-card-sub">De volta ao lar em 21 dias</div>
+      </div>
+      <span class="link-card-arrow">→</span>
+    </a>
 
     <!-- Divisor -->
     <div class="section-label">Instrumentos Clínicos</div>
