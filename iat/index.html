@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vício em Internet (IAT)</title>
+  <meta name="description" content="Teste de Vício em Internet (Internet Addiction Test) — Young, 2004. Teste on-line gratuito." />
+  <link rel="stylesheet" href="../styles.css" />
+  <script defer src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+</head>
+<body>
+  <div class="wrap">
+
+    <a href="/" class="back">← Todos os testes</a>
+
+    <header style="margin-bottom: 22px;">
+      <h1>Teste de Vício em Internet</h1>
+      <p class="sub">
+        Internet Addiction Test (IAT) — Young, 2004.
+        Para cada questão, selecione com que frequência o comportamento descrito ocorre em sua vida.
+        Ao final, você pode baixar um PDF com o resultado.
+      </p>
+    </header>
+
+    <div class="test-layout">
+
+      <section class="card">
+        <div class="card-h">
+          <span>Questionário</span>
+          <span class="pill" id="progress">0 de 20 respondidas</span>
+        </div>
+
+        <div class="card-c">
+          <div class="helper">
+            <strong>Instruções:</strong> responda com base no comportamento típico das últimas semanas.
+            Nome e e-mail são opcionais e constam apenas no PDF — nenhum dado é enviado.
+            <div class="grid2">
+              <div class="field">
+                <label for="nome">Nome (opcional)</label>
+                <input id="nome" type="text" placeholder="Seu nome" autocomplete="name" />
+              </div>
+              <div class="field">
+                <label for="email">E-mail (opcional)</label>
+                <input id="email" type="email" placeholder="seuemail@exemplo.com" autocomplete="email" />
+              </div>
+              <div class="field" style="grid-column: 1 / -1;">
+                <label for="evento">Código do Evento (opcional)</label>
+                <input id="evento" type="text" placeholder="Ex.: BPD-VA-2026" />
+              </div>
+            </div>
+          </div>
+
+          <form id="form">
+            <div id="questions"></div>
+
+            <div class="actions">
+              <button type="button" class="primary" id="btnCalcular">Calcular resultado</button>
+              <button type="button" id="btnPdf" disabled>Baixar PDF</button>
+              <button type="button" id="btnLimpar">Limpar</button>
+            </div>
+
+            <div class="mini">
+              Dica: responda de forma intuitiva. Não existe certo ou errado.
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <aside class="card">
+        <div class="card-h">
+          <span>Resultado</span>
+          <span class="pill" id="status">Aguardando</span>
+        </div>
+        <div class="card-c">
+          <div class="result-box">
+            <div class="score" id="score">0</div>
+            <div class="range" id="range">Preencha todas as questões</div>
+            <p class="desc" id="desc"></p>
+          </div>
+
+          <div class="mini" style="margin-top:14px;">
+            <strong>Observação:</strong> este instrumento é uma escala de autorrelato e não substitui
+            avaliação clínica ou psicológica.
+          </div>
+
+          <div class="sign"><strong>@eufilipeteixeira</strong></div>
+
+          <div class="mini" style="margin-top:10px;">
+            Referência: Young, K. S. (2004). Internet Addiction: A New Clinical Phenomenon and Its Consequences.
+            <em>American Behavioral Scientist</em>, 48(4), 402–415.
+          </div>
+        </div>
+      </aside>
+
+    </div>
+
+    <!-- Seção de contexto clínico — aparece após calcular -->
+    <div id="clinical-section" style="margin-top: 24px;"></div>
+
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="../utils.js"></script>
+  <script>
+    const STATEMENTS = [
+      "Com que frequência você acha que passa mais tempo on-line do que pretendia?",
+      "Com que frequência você negligencia as tarefas domésticas para passar mais tempo conectado?",
+      "Com que frequência você prefere a emoção da Internet à intimidade com seu/sua parceiro(a)?",
+      "Com que frequência você constrói novos relacionamentos com usuários da internet?",
+      "Com que frequência outras pessoas se queixam a você sobre a quantidade de tempo que você passa conectado(a)?",
+      "Com que frequência suas notas ou tarefas da escola sofrem por causa da quantidade de tempo que você passa na internet?",
+      "Com que frequência você checa seu e-mail antes de qualquer outra coisa que você precise fazer?",
+      "Com que frequência seu desempenho ou produtividade no trabalho sofre por causa da Internet?",
+      "Com que frequência você fica na defensiva ou omite quando alguém lhe pergunta o que você faz on-line?",
+      "Com que frequência você bloqueia pensamentos ruins sobre sua vida ao pensar na Internet?",
+      "Com que frequência você se pega pensando em quando você vai se conectar novamente?",
+      "Com que frequência você teme que a vida sem a Internet seria chata, vazia e sem graça?",
+      "Com que frequência você estoura, grita ou se mostra irritado(a) se alguém lhe incomoda enquanto você está navegando?",
+      "Com que frequência você dorme pouco por ficar conectado(a) até tarde da noite?",
+      "Com que frequência você se sente preocupado(a) com a Internet quando está off-line?",
+      "Com que frequência você se pega dizendo \"só mais alguns minutos\" quando está navegando?",
+      "Com que frequência você tenta diminuir a quantidade de tempo que fica conectado e não consegue?",
+      "Com que frequência você tenta esconder quanto tempo fica on-line?",
+      "Com que frequência você opta por passar mais tempo na internet em vez de sair com outras pessoas?",
+      "Com que frequência você se sente deprimido(a), mal-humorado(a) ou nervoso(a) quando está off-line e esse sentimento vai embora assim que você volta a se conectar?"
+    ];
+
+    const OPTS = [
+      { val: "1", lbl: "Raramente" },
+      { val: "2", lbl: "Às vezes" },
+      { val: "3", lbl: "Frequente." },
+      { val: "4", lbl: "Geralmente" },
+      { val: "5", lbl: "Sempre" },
+      { val: "0", lbl: "Não se aplica" }
+    ];
+
+    const RANGES = [
+      { min: 80, max: 100, label: "Uso problemático severo",   desc: "O uso da internet está causando problemas significativos em sua vida. É recomendado avaliar o impacto e buscar apoio profissional." },
+      { min: 50, max: 79,  label: "Uso problemático moderado", desc: "Você experimenta problemas ocasionais ou frequentes relacionados ao uso da internet. Considere o impacto em sua vida diária." },
+      { min: 0,  max: 49,  label: "Uso médio / normal",        desc: "Você é um usuário médio. Pode passar tempo on-line a mais em alguns momentos, mas tem controle sobre o uso." }
+    ];
+
+    const OPT_LABELS = { "0":"Não se aplica","1":"Raramente","2":"Às vezes","3":"Frequentemente","4":"Geralmente","5":"Sempre" };
+
+    /* Gera as questões */
+    const container = document.getElementById('questions');
+    STATEMENTS.forEach((text, i) => {
+      const n  = i + 1;
+      const fs = document.createElement('fieldset');
+      const lg = document.createElement('legend');
+      lg.textContent = `${n}. ${text}`;
+      fs.appendChild(lg);
+
+      const scale = document.createElement('div');
+      scale.className = 'scale-iat';
+
+      OPTS.forEach(opt => {
+        const lbl = document.createElement('label');
+        lbl.className = 'opt-iat';
+        lbl.innerHTML = `<input type="radio" name="q${n}" value="${opt.val}">
+          <span class="opt-val">${opt.val}</span>
+          <span class="opt-lbl">${opt.lbl}</span>`;
+        scale.appendChild(lbl);
+      });
+
+      fs.appendChild(scale);
+      container.appendChild(fs);
+    });
+
+    /* Lógica */
+    const form       = document.getElementById('form');
+    const progressEl = document.getElementById('progress');
+    const statusEl   = document.getElementById('status');
+    const scoreEl    = document.getElementById('score');
+    const rangeEl    = document.getElementById('range');
+    const descEl     = document.getElementById('desc');
+    const btnPdf     = document.getElementById('btnPdf');
+
+    let lastResult = null;
+
+    function answered() {
+      let c = 0;
+      for (let i = 1; i <= 20; i++) if (document.querySelector(`input[name=q${i}]:checked`)) c++;
+      return c;
+    }
+
+    function updateProgress() {
+      const a = answered();
+      progressEl.textContent = `${a} de 20 respondidas`;
+      statusEl.textContent   = a === 20 ? 'Pronto' : 'Aguardando';
+    }
+
+    form.addEventListener('change', updateProgress);
+    updateProgress();
+
+    function compute() {
+      let total = 0;
+      const answers = [];
+      for (let i = 1; i <= 20; i++) {
+        const p = document.querySelector(`input[name=q${i}]:checked`);
+        if (!p) return null;
+        const v = parseInt(p.value, 10);
+        total += v;
+        answers.push(v);
+      }
+      const r = RANGES.find(x => total >= x.min && total <= x.max);
+      return { total, answers, range: r ? r.label : 'Indisponível', desc: r ? r.desc : '' };
+    }
+
+    /* ── Contexto clínico ── */
+    function showClinicalContext(total) {
+      const isSevere   = total >= 80;
+      const isModerate = total >= 50;
+
+      let html = `<div class="card">
+        <div class="card-h">
+          <span>Contexto Clínico</span>
+          <span class="pill">Nabuco · Griffiths, 2005 · Young, 1998</span>
+        </div>`;
+
+      if (isSevere) {
+        html += `<div class="clin-alert severe">
+          <strong>Pontuação elevada — atenção</strong>
+          Sua pontuação indica que o uso da internet pode estar causando prejuízos significativos.
+          Considere buscar avaliação com um psicólogo ou psiquiatra especializado em dependências comportamentais.
+        </div>`;
+      } else if (isModerate) {
+        html += `<div class="clin-alert moderate">
+          <strong>Pontuação de atenção</strong>
+          Sua pontuação indica problemas ocasionais ou frequentes relacionados ao uso da internet.
+          Vale refletir sobre o impacto na sua rotina, relacionamentos e desempenho.
+        </div>`;
+      }
+
+      if (isModerate) {
+        html += `<div class="clin-grid">
+          <div class="clin-block">
+            <h3>Critérios diagnósticos (Young, 1998)</h3>
+            <p style="font-size:12.5px;color:var(--muted);margin:0 0 8px;">5 ou mais critérios indicam dependência:</p>
+            <ol class="clin-list">
+              <li>Preocupação constante com a Internet</li>
+              <li>Necessidade de aumentar o tempo conectado para obter a mesma satisfação <em>(tolerância)</em></li>
+              <li>Esforços repetidos e fracassados para diminuir o uso</li>
+              <li>Inquietude ou irritabilidade quando o uso é restringido</li>
+              <li>Permanece on-line mais do que pretendia</li>
+              <li>Trabalho ou relações sociais em risco pelo uso excessivo</li>
+              <li>Mentiras sobre a quantidade de horas conectadas</li>
+              <li>Uso da Internet para fugir de problemas ou aliviar humor negativo</li>
+            </ol>
+          </div>
+          <div class="clin-block">
+            <h3>Sinais de alerta</h3>
+            <ul class="clin-list">
+              <li>Necessidade constante de verificar redes sociais</li>
+              <li>Desejo incontrolável de "dar uma olhadinha" em situações sociais</li>
+              <li>Queixa de familiares ou amigos sobre o uso excessivo</li>
+              <li>Troca progressiva de interações reais pelas virtuais</li>
+            </ul>
+            <h3>Como agir</h3>
+            <ul class="clin-list">
+              <li>Comentar o problema abertamente com alguém de confiança</li>
+              <li>Registrar situações que funcionam como "gatilho" para o desejo de se conectar</li>
+              <li>Delimitar horários de uso <em>(external stoppers)</em></li>
+              <li>Criar intervalos ou zonas "proibidas" de uso</li>
+              <li>Buscar ajuda especializada se o uso for incontrolável</li>
+            </ul>
+          </div>
+        </div>`;
+      }
+
+      html += `<div class="clin-fullrow">
+        <h3>6 Componentes das Dependências Comportamentais
+          <span style="font-weight:400;text-transform:none;letter-spacing:0;"> — Griffiths, 2005</span>
+        </h3>
+        <div class="clin-components-grid">
+          <div class="clin-component"><strong>Saliência</strong>O comportamento domina pensamentos e ações, tornando-se a atividade mais importante da vida.</div>
+          <div class="clin-component"><strong>Modificação de humor</strong>A experiência subjetiva traz prazer, euforia ou alívio da ansiedade.</div>
+          <div class="clin-component"><strong>Tolerância</strong>Necessidade de usar por períodos cada vez maiores para atingir o mesmo efeito.</div>
+          <div class="clin-component"><strong>Abstinência</strong>Irritabilidade, ansiedade ou insônia ao interromper ou reduzir o uso.</div>
+          <div class="clin-component"><strong>Conflito</strong>Conflito com pessoas próximas, com outras atividades ou internamente sobre o próprio uso.</div>
+          <div class="clin-component"><strong>Recaída</strong>Tendência de retornar rapidamente ao padrão excessivo após períodos de abstinência.</div>
+        </div>
+      </div>`;
+
+      html += `<div class="clin-quote">
+        <blockquote>
+          "Talvez o problema não sejam as novas tecnologias, mas nossas vulnerabilidades pessoais."
+          <cite>— Cristiano Nabuco de Abreu</cite>
+        </blockquote>
+      </div>`;
+
+      html += `</div>`;
+
+      const section = document.getElementById('clinical-section');
+      section.innerHTML = html;
+      section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    document.getElementById('btnCalcular').addEventListener('click', () => {
+      const res = compute();
+      if (!res) { showToast('Responda todas as questões.'); return; }
+      lastResult = res;
+      scoreEl.textContent = res.total;
+      rangeEl.textContent = res.range;
+      descEl.textContent  = res.desc;
+      statusEl.textContent = 'Calculado';
+      btnPdf.disabled = false;
+      showToast('Resultado calculado.');
+      showClinicalContext(res.total);
+    });
+
+    document.getElementById('btnLimpar').addEventListener('click', () => {
+      form.reset();
+      lastResult = null;
+      scoreEl.textContent = '0';
+      rangeEl.textContent = 'Preencha todas as questões';
+      descEl.textContent  = '';
+      btnPdf.disabled = true;
+      document.getElementById('clinical-section').innerHTML = '';
+      updateProgress();
+      showToast('Respostas limpas.');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    btnPdf.addEventListener('click', () => {
+      if (!lastResult) { showToast('Calcule o resultado antes.'); return; }
+      const doc = getPdfDoc();
+      if (!doc) return;
+
+      const nome   = document.getElementById('nome').value.trim();
+      const email  = document.getElementById('email').value.trim();
+      const evento = document.getElementById('evento').value.trim();
+
+      let { marginX, y } = pdfHeader(doc, 'Teste de Vício em Internet (IAT) — Young, 2004', nome, email, evento);
+      y = pdfResultSection(doc, marginX, y, lastResult.total, lastResult.range, lastResult.desc, 'mín. 0 / máx. 100');
+
+      doc.setFont('helvetica', 'bold'); doc.setFontSize(13);
+      doc.text('Respostas', marginX, y); y += 7;
+      doc.setFont('helvetica', 'normal'); doc.setFontSize(11);
+
+      STATEMENTS.forEach((stmt, i) => {
+        const respVal = String(lastResult.answers[i]);
+        const w = doc.splitTextToSize(`${i+1}. ${stmt}`, 180);
+        doc.text(w, marginX, y);
+        y += w.length * 5.2;
+        doc.text(`    Resposta: ${OPT_LABELS[respVal]} (${respVal})`, marginX, y);
+        y += 7;
+        if (y > 265) { doc.addPage(); y = 18; }
+      });
+
+      pdfFooter(
+        doc, marginX, y + 3,
+        'Observação: este instrumento é uma escala de autorrelato e não substitui avaliação clínica ou psicológica.',
+        'Referência: Young, K. S. (2004). Internet Addiction: A New Clinical Phenomenon and Its Consequences. American Behavioral Scientist, 48(4), 402–415.'
+      );
+
+      doc.save(pdfFileName('IAT', nome));
+      showToast('PDF baixado.');
+    });
+  </script>
+</body>
+</html>

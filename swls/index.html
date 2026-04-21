@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Satisfação com a Vida (SWLS)</title>
+  <meta name="description" content="Escala de Satisfação com a Vida — Diener et al., 1985. Teste on-line gratuito." />
+  <link rel="stylesheet" href="../styles.css" />
+  <script defer src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+</head>
+<body>
+  <div class="wrap">
+
+    <a href="/" class="back">← Todos os testes</a>
+
+    <header style="margin-bottom: 22px;">
+      <h1>Escala de Satisfação com a Vida</h1>
+      <p class="sub">
+        Responda às 5 afirmações considerando sua vida como um todo.
+        Utilize a escala de 1 (discordo totalmente) a 7 (concordo totalmente).
+        Ao final, você pode baixar um PDF com o resultado.
+      </p>
+    </header>
+
+    <div class="test-layout">
+
+      <section class="card">
+        <div class="card-h">
+          <span>Questionário</span>
+          <span class="pill" id="progress">0 de 5 respondidas</span>
+        </div>
+
+        <div class="card-c">
+          <div class="helper">
+            <strong>Modo palestra (opcional):</strong> insira o <strong>Código do Evento</strong> se estiver em um evento.
+            Nome e e-mail são opcionais e constam apenas no PDF — nenhum dado é enviado.
+            <div class="grid2">
+              <div class="field">
+                <label for="nome">Nome (opcional)</label>
+                <input id="nome" type="text" placeholder="Seu nome" autocomplete="name" />
+              </div>
+              <div class="field">
+                <label for="email">E-mail (opcional)</label>
+                <input id="email" type="email" placeholder="seuemail@exemplo.com" autocomplete="email" />
+              </div>
+              <div class="field" style="grid-column: 1 / -1;">
+                <label for="evento">Código do Evento (opcional)</label>
+                <input id="evento" type="text" placeholder="Ex.: BPD-VA-2026" />
+              </div>
+            </div>
+          </div>
+
+          <form id="form">
+            <fieldset>
+              <legend>1. Na maioria dos aspectos, minha vida está próxima do meu ideal</legend>
+              <div class="scale">
+                <label class="opt"><input type="radio" name="q1" value="1">1</label>
+                <label class="opt"><input type="radio" name="q1" value="2">2</label>
+                <label class="opt"><input type="radio" name="q1" value="3">3</label>
+                <label class="opt"><input type="radio" name="q1" value="4">4</label>
+                <label class="opt"><input type="radio" name="q1" value="5">5</label>
+                <label class="opt"><input type="radio" name="q1" value="6">6</label>
+                <label class="opt"><input type="radio" name="q1" value="7">7</label>
+              </div>
+              <div class="hint"><span>Discordo totalmente</span><span>Concordo totalmente</span></div>
+            </fieldset>
+
+            <fieldset>
+              <legend>2. Minhas condições de vida são excelentes</legend>
+              <div class="scale">
+                <label class="opt"><input type="radio" name="q2" value="1">1</label>
+                <label class="opt"><input type="radio" name="q2" value="2">2</label>
+                <label class="opt"><input type="radio" name="q2" value="3">3</label>
+                <label class="opt"><input type="radio" name="q2" value="4">4</label>
+                <label class="opt"><input type="radio" name="q2" value="5">5</label>
+                <label class="opt"><input type="radio" name="q2" value="6">6</label>
+                <label class="opt"><input type="radio" name="q2" value="7">7</label>
+              </div>
+              <div class="hint"><span>Discordo totalmente</span><span>Concordo totalmente</span></div>
+            </fieldset>
+
+            <fieldset>
+              <legend>3. Eu sou satisfeito com a minha vida</legend>
+              <div class="scale">
+                <label class="opt"><input type="radio" name="q3" value="1">1</label>
+                <label class="opt"><input type="radio" name="q3" value="2">2</label>
+                <label class="opt"><input type="radio" name="q3" value="3">3</label>
+                <label class="opt"><input type="radio" name="q3" value="4">4</label>
+                <label class="opt"><input type="radio" name="q3" value="5">5</label>
+                <label class="opt"><input type="radio" name="q3" value="6">6</label>
+                <label class="opt"><input type="radio" name="q3" value="7">7</label>
+              </div>
+              <div class="hint"><span>Discordo totalmente</span><span>Concordo totalmente</span></div>
+            </fieldset>
+
+            <fieldset>
+              <legend>4. Tenho alcançado coisas importantes que desejo em minha vida</legend>
+              <div class="scale">
+                <label class="opt"><input type="radio" name="q4" value="1">1</label>
+                <label class="opt"><input type="radio" name="q4" value="2">2</label>
+                <label class="opt"><input type="radio" name="q4" value="3">3</label>
+                <label class="opt"><input type="radio" name="q4" value="4">4</label>
+                <label class="opt"><input type="radio" name="q4" value="5">5</label>
+                <label class="opt"><input type="radio" name="q4" value="6">6</label>
+                <label class="opt"><input type="radio" name="q4" value="7">7</label>
+              </div>
+              <div class="hint"><span>Discordo totalmente</span><span>Concordo totalmente</span></div>
+            </fieldset>
+
+            <fieldset>
+              <legend>5. Se eu pudesse viver novamente, não mudaria praticamente nada</legend>
+              <div class="scale">
+                <label class="opt"><input type="radio" name="q5" value="1">1</label>
+                <label class="opt"><input type="radio" name="q5" value="2">2</label>
+                <label class="opt"><input type="radio" name="q5" value="3">3</label>
+                <label class="opt"><input type="radio" name="q5" value="4">4</label>
+                <label class="opt"><input type="radio" name="q5" value="5">5</label>
+                <label class="opt"><input type="radio" name="q5" value="6">6</label>
+                <label class="opt"><input type="radio" name="q5" value="7">7</label>
+              </div>
+              <div class="hint"><span>Discordo totalmente</span><span>Concordo totalmente</span></div>
+            </fieldset>
+
+            <div class="actions">
+              <button type="button" class="primary" id="btnCalcular">Calcular resultado</button>
+              <button type="button" id="btnPdf" disabled>Baixar PDF</button>
+              <button type="button" id="btnLimpar">Limpar</button>
+            </div>
+
+            <div class="mini">
+              Dica: responda de forma intuitiva. Não existe certo ou errado.
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <aside class="card">
+        <div class="card-h">
+          <span>Resultado</span>
+          <span class="pill" id="status">Aguardando</span>
+        </div>
+        <div class="card-c">
+          <div class="result-box">
+            <div class="score" id="score">0</div>
+            <div class="range" id="range">Preencha todas as questões</div>
+            <p class="desc" id="desc"></p>
+          </div>
+
+          <div class="mini" style="margin-top:14px;">
+            <strong>Observação:</strong> este instrumento é uma escala de autorrelato e não substitui
+            avaliação clínica ou psicológica.
+          </div>
+
+          <div class="sign"><strong>@eufilipeteixeira</strong></div>
+
+          <div class="mini" style="margin-top:10px;">
+            Referência: Diener, E., Emmons, R. A., Larsen, R. J., &amp; Griffin, S. (1985).
+            The Satisfaction with Life Scale. <em>Journal of Personality Assessment</em>, 49, 71–75.
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="../utils.js"></script>
+  <script>
+    const form       = document.getElementById('form');
+    const progressEl = document.getElementById('progress');
+    const statusEl   = document.getElementById('status');
+    const scoreEl    = document.getElementById('score');
+    const rangeEl    = document.getElementById('range');
+    const descEl     = document.getElementById('desc');
+    const btnPdf     = document.getElementById('btnPdf');
+
+    const STATEMENTS = [
+      "Na maioria dos aspectos, minha vida está próxima do meu ideal",
+      "Minhas condições de vida são excelentes",
+      "Eu sou satisfeito com a minha vida",
+      "Tenho alcançado coisas importantes que desejo em minha vida",
+      "Se eu pudesse viver novamente, não mudaria praticamente nada"
+    ];
+
+    const RANGES = [
+      { min: 31, max: 35, label: "Extremamente satisfeito",   desc: "Alto nível de satisfação com a vida no momento." },
+      { min: 26, max: 30, label: "Satisfeito",                desc: "Bom nível de satisfação com a vida." },
+      { min: 21, max: 25, label: "Um pouco satisfeito",       desc: "Satisfação moderada com a vida." },
+      { min: 20, max: 20, label: "Neutro",                    desc: "Avaliação neutra da vida neste momento." },
+      { min: 15, max: 19, label: "Um pouco insatisfeito",     desc: "Alguns aspectos da vida podem precisar de atenção." },
+      { min: 10, max: 14, label: "Insatisfeito",              desc: "Nível significativo de insatisfação." },
+      { min: 5,  max: 9,  label: "Extremamente insatisfeito", desc: "Baixo nível de satisfação com a vida no momento." }
+    ];
+
+    let lastResult = null;
+
+    function answered() {
+      let c = 0;
+      for (let i = 1; i <= 5; i++) if (document.querySelector(`input[name=q${i}]:checked`)) c++;
+      return c;
+    }
+
+    function updateProgress() {
+      const a = answered();
+      progressEl.textContent = `${a} de 5 respondidas`;
+      statusEl.textContent   = a === 5 ? 'Pronto' : 'Aguardando';
+    }
+
+    form.addEventListener('change', updateProgress);
+    updateProgress();
+
+    function compute() {
+      let total = 0;
+      const answers = [];
+      for (let i = 1; i <= 5; i++) {
+        const p = document.querySelector(`input[name=q${i}]:checked`);
+        if (!p) return null;
+        const v = parseInt(p.value, 10);
+        total += v;
+        answers.push(v);
+      }
+      const r = RANGES.find(x => total >= x.min && total <= x.max);
+      return { total, answers, range: r ? r.label : 'Indisponível', desc: r ? r.desc : '' };
+    }
+
+    document.getElementById('btnCalcular').addEventListener('click', () => {
+      const res = compute();
+      if (!res) { showToast('Responda todas as questões.'); return; }
+      lastResult = res;
+      scoreEl.textContent = res.total;
+      rangeEl.textContent = res.range;
+      descEl.textContent  = res.desc;
+      statusEl.textContent = 'Calculado';
+      btnPdf.disabled = false;
+      showToast('Resultado calculado.');
+    });
+
+    document.getElementById('btnLimpar').addEventListener('click', () => {
+      form.reset();
+      lastResult = null;
+      scoreEl.textContent = '0';
+      rangeEl.textContent = 'Preencha todas as questões';
+      descEl.textContent  = '';
+      btnPdf.disabled = true;
+      updateProgress();
+      showToast('Respostas limpas.');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    btnPdf.addEventListener('click', () => {
+      if (!lastResult) { showToast('Calcule o resultado antes.'); return; }
+      const doc = getPdfDoc();
+      if (!doc) return;
+
+      const nome   = document.getElementById('nome').value.trim();
+      const email  = document.getElementById('email').value.trim();
+      const evento = document.getElementById('evento').value.trim();
+
+      let { marginX, y } = pdfHeader(doc, 'Escala de Satisfação com a Vida (SWLS)', nome, email, evento);
+      y = pdfResultSection(doc, marginX, y, lastResult.total, lastResult.range, lastResult.desc, 'mín. 5 / máx. 35');
+
+      doc.setFont('helvetica', 'bold'); doc.setFontSize(13);
+      doc.text('Respostas', marginX, y); y += 7;
+      doc.setFont('helvetica', 'normal'); doc.setFontSize(11);
+
+      STATEMENTS.forEach((stmt, i) => {
+        const line = `${i+1}. ${stmt}  |  Resposta: ${lastResult.answers[i]} (1–7)`;
+        const w = doc.splitTextToSize(line, 180);
+        doc.text(w, marginX, y);
+        y += w.length * 5.2 + 2;
+        if (y > 270) { doc.addPage(); y = 18; }
+      });
+
+      pdfFooter(
+        doc, marginX, y + 3,
+        'Observação: este instrumento é uma escala de autorrelato e não substitui avaliação clínica ou psicológica.',
+        'Referência: Diener, E., Emmons, R. A., Larsen, R. J., & Griffin, S. (1985). The Satisfaction with Life Scale. Journal of Personality Assessment, 49, 71–75.'
+      );
+
+      doc.save(pdfFileName('SWLS', nome));
+      showToast('PDF baixado.');
+    });
+  </script>
+</body>
+</html>
